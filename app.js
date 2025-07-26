@@ -31,6 +31,13 @@ function pad2(num) {
   return num < 10 ? '0' + num : num;
 }
 
+// Función para convertir grados a dirección cardinal
+function getWindDirection(deg) {
+  const directions = ["N", "NE", "E", "SE", "S", "SO", "O", "NO"];
+  const index = Math.round(deg / 45) % 8;
+  return directions[index];
+}
+
 async function fetchWeather() {
   const response = await fetch(apiUrl);
   const data = await response.json();
@@ -39,12 +46,18 @@ async function fetchWeather() {
   document.getElementById("city-name").textContent = data.city.name;
   const current = data.list[0];
   const currentIconClass = getWeatherIconClass(current.weather[0].icon);
+
+  // Añadimos viento actual (convertimos m/s a km/h)
+  const currentWindSpeed = (current.wind.speed * 3.6).toFixed(1);
+  const currentWindDir = getWindDirection(current.wind.deg);
+
   document.getElementById("current-weather").innerHTML = `
     <div class="weather-card">
       <i class="weather-icon wi ${currentIconClass}"></i>
       <h3>${new Date(current.dt * 1000).toLocaleString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' })}</h3>
       <div class="temp-box">${Math.round(current.main.temp)}°C</div>
       <div>${current.weather[0].description}</div>
+      <div><i class="wi wi-strong-wind"></i> Viento: ${currentWindSpeed} km/h (${currentWindDir})</div>
     </div>
   `;
 
@@ -88,12 +101,18 @@ async function fetchWeather() {
       hours.forEach(hour => {
         const hourIconClass = getWeatherIconClass(hour.weather[0].icon);
         const dateObj = new Date(hour.dt * 1000 - timezoneOffsetMs);
+
+        // Añadimos viento en cada hora
+        const hourWindSpeed = (hour.wind.speed * 3.6).toFixed(1);
+        const hourWindDir = getWindDirection(hour.wind.deg);
+
         hourlyHtml += `
           <div class="weather-card">
             <i class="weather-icon wi ${hourIconClass}"></i>
             <h4>${dateObj.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}</h4>
             <div class="temp-box">${Math.round(hour.main.temp)}°C</div>
             <div>${hour.weather[0].description}</div>
+            <div><i class="wi wi-strong-wind"></i> ${hourWindSpeed} km/h (${hourWindDir})</div>
           </div>
         `;
       });
@@ -111,12 +130,18 @@ async function fetchWeather() {
       const day = hours[0];
       const dayIconClass = getWeatherIconClass(day.weather[0].icon);
       const labelDate = new Date(dayTimestamps[i]);
+
+      // Añadimos viento del primer registro del día
+      const dayWindSpeed = (day.wind.speed * 3.6).toFixed(1);
+      const dayWindDir = getWindDirection(day.wind.deg);
+
       dailyHtml += `
         <div class="weather-card">
           <i class="weather-icon wi ${dayIconClass}"></i>
           <h4>${labelDate.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' })}</h4>
           <div class="temp-box">${Math.round(day.main.temp)}°C</div>
           <div>${day.weather[0].description}</div>
+          <div><i class="wi wi-strong-wind"></i> ${dayWindSpeed} km/h (${dayWindDir})</div>
         </div>
       `;
     }
