@@ -22,35 +22,7 @@
     <div class="daily-forecast" id="daily-forecast">
       <!-- Pronóstico por días -->
     </div>
-
-    <!-- Contador de visitantes -->
-    <div id="visitor-counter" style="margin-top: 20px; font-size: 18px; text-align: center; font-weight: bold;">
-      Visitantes: Cargando...
-    </div>
   </div>
-
   <script src="app.js"></script>
-  <script>
-    const counterElement = document.getElementById('visitor-counter');
-    const counterKey = 'visitedEsteponaPage';
-
-    // Comprobar si ya visitó la página
-    if (!localStorage.getItem(counterKey)) {
-      // Primera vez -> sumar al contador
-      fetch('https://api.countapi.xyz/hit/estepona-weather/visitas')
-        .then(response => response.json())
-        .then(data => {
-          counterElement.textContent = `Visitantes: ${data.value}`;
-          localStorage.setItem(counterKey, 'true'); // Guardar que ya contó
-        });
-    } else {
-      // Si ya visitó, solo leer el contador sin incrementar
-      fetch('https://api.countapi.xyz/get/estepona-weather/visitas')
-        .then(response => response.json())
-        .then(data => {
-          counterElement.textContent = `Visitantes: ${data.value}`;
-        });
-    }
-  </script>
 </body>
 </html>
