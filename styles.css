@@ -1,0 +1,88 @@
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #83a4d4, #b6fbff);
+  margin: 0;
+  padding: 0;
+}
+.weather-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+.current-weather, .hourly-forecast, .daily-forecast {
+  margin-bottom: 2rem;
+}
+.weather-card {
+  background: #f7f9fa;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 0.5rem;
+  text-align: center;
+  min-width: 120px;
+  max-width: 130px;
+  vertical-align: top;
+  display: inline-block;
+  box-sizing: border-box;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+.weather-icon {
+  font-size: 48px;
+  color: #467fd0;
+  margin-bottom: 0.5rem;
+  line-height: 1;
+  display: inline-block;
+}
+h1, h2 {
+  text-align: center;
+  color: #333;
+}
+
+/* Hourly forecast day grouping - horizontal scroll */
+.hourly-day-group {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  align-items: flex-start;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: #917d11 #082a6631;
+}
+.hourly-day-group::-webkit-scrollbar {
+  height: 8px;
+}
+.hourly-day-group::-webkit-scrollbar-thumb {
+  background: #afa8a7;
+  border-radius: 4px;
+}
+.hourly-day-group::-webkit-scrollbar-track {
+  background: #6463c9;
+  border-radius: 4px;
+}
+
+.hourly-day-label {
+  width: 100%;
+  text-align: left;
+  margin: 1.2em 0 0.5em 0;
+  font-weight: bold;
+  color: #000000;
+  font-size: 1.1em;
+}
+
+/* Temperature pill/box */
+.temp-box {
+  display: inline-block;
+  padding: 0.4em 0.9em;
+  background: #1005ac6c;
+  color: #110101;
+  border-radius: 1.5em;
+  font-weight: bold;
+  font-size: 1.2em;
+  box-shadow: 0 1px 4px rgba(0, 255, 0, 0.1);
+  margin: 0.4em 0;
+  letter-spacing: 0.02em;
+}
